@@ -260,11 +260,41 @@ POST http://localhost:8081/bookings
 
 ---
 
-## Perfect Next Extensions (Optional)
-
-* Add **PDF upload service** using GridFS
-* Add **Plot availability update**
-* Add **API Gateway**
-* Add **Docker**
-
+REAL_ESTATE_APP/
+│
+├── frontend/                     ← React UI (Vite)
+│   ├── src/
+│   │   ├── pages/
+│   │   │   ├── Plots.jsx
+│   │   │   └── Bookings.jsx
+│   │   └── services/
+│   │       ├── plotApi.js
+│   │       └── bookingApi.js
+│   └── package.json
+│
+├── plot-service/                 ← Microservice 1 (Plots)
+│   ├── src/
+│   │   ├── routes/
+│   │   │   └── plot.routes.js
+│   │   ├── controllers/
+│   │   │   └── plot.controller.js
+│   │   ├── models/
+│   │   │   └── plot.model.js
+│   │   └── app.js
+│   ├── package.json
+│   └── server.js
+│
+├── booking-service/              ← Microservice 2 (Bookings)
+│   ├── src/
+│   │   ├── routes/
+│   │   │   └── booking.routes.js
+│   │   ├── controllers/
+│   │   │   └── booking.controller.js
+│   │   ├── models/
+│   │   │   └── booking.model.js
+│   │   └── app.js
+│   ├── package.json
+│   └── server.js
+│
+└── README.md
 
