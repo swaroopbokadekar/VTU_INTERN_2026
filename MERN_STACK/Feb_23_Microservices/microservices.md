@@ -260,41 +260,8 @@ POST http://localhost:8081/bookings
 
 ---
 
-REAL_ESTATE_APP/
-│
-├── frontend/                     ← React UI (Vite)
-│   ├── src/
-│   │   ├── pages/
-│   │   │   ├── Plots.jsx
-│   │   │   └── Bookings.jsx
-│   │   └── services/
-│   │       ├── plotApi.js
-│   │       └── bookingApi.js
-│   └── package.json
-│
-├── plot-service/                 ← Microservice 1 (Plots)
-│   ├── src/
-│   │   ├── routes/
-│   │   │   └── plot.routes.js
-│   │   ├── controllers/
-│   │   │   └── plot.controller.js
-│   │   ├── models/
-│   │   │   └── plot.model.js
-│   │   └── app.js
-│   ├── package.json
-│   └── server.js
-│
-├── booking-service/              ← Microservice 2 (Bookings)
-│   ├── src/
-│   │   ├── routes/
-│   │   │   └── booking.routes.js
-│   │   ├── controllers/
-│   │   │   └── booking.controller.js
-│   │   ├── models/
-│   │   │   └── booking.model.js
-│   │   └── app.js
-│   ├── package.json
-│   └── server.js
-│
-└── README.md
+
+
+<img width="469" height="630" alt="image" src="https://github.com/user-attachments/assets/0e8c56ab-c73f-4a0b-88b8-cfceb4411467" />
+
 
