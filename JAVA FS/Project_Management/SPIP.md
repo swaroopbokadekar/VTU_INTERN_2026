@@ -1,4 +1,3 @@
-That’s a **very good Full-Stack (Java FS) capstone idea**, and it’s *perfect* for teaching **real-world project decomposition** 👍
 
 Below is a **high-level breakup of the “entire” Real Estate Portal** into **clear, logical parts** so students can **divide work, own modules, and work in parallel**.
 
