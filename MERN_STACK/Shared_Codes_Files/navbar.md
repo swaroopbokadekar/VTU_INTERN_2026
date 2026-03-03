@@ -364,3 +364,205 @@ npm run dev
 ✔ Clean reusable components
 ✔ Home, Login, Register pages
 
+
+=============================================================
+
+# INTER COMPONENT COMMUNICAITON 
+
+
+Perfect 👍 Since you are teaching React basics and already have layout + pages, this is the best time to demo **Inter-Component Communication** clearly.
+
+We’ll demonstrate:
+
+1. ✅ Parent → Child communication (via props)
+2. ✅ Child → Parent communication (via callback function)
+
+---
+
+# 🎯 What We Will Add
+
+We’ll add 2 new components inside `components`:
+
+```
+src
+ ├── components
+ │     ├── Navbar.jsx
+ │     ├── Footer.jsx
+ │     ├── MessageInput.jsx      ✅ (Child)
+ │     ├── MessageDisplay.jsx    ✅ (Child)
+```
+
+We will use them inside:
+
+```
+pages/Home.jsx   ✅ (Parent)
+```
+
+---
+
+# 🧠 Concept We Are Demonstrating
+
+* `Home.jsx` → Parent
+* `MessageInput` → Sends data to parent
+* `MessageDisplay` → Receives data from parent
+
+👉 This clearly shows how React data flows.
+
+---
+
+# 🛠 Step 1: Create `MessageInput.jsx`
+
+### 📁 src/components/MessageInput.jsx
+
+```jsx
+import { useState } from "react";
+
+function MessageInput({ sendMessageToParent }) {
+  const [message, setMessage] = useState("");
+
+  const handleSend = () => {
+    sendMessageToParent(message); // Child -> Parent
+    setMessage("");
+  };
+
+  return (
+    <div style={{ marginBottom: "20px" }}>
+      <h3>Message Input Component</h3>
+      <input
+        type="text"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder="Enter message"
+      />
+      <button onClick={handleSend}>Send</button>
+    </div>
+  );
+}
+
+export default MessageInput;
+```
+
+---
+
+# 🛠 Step 2: Create `MessageDisplay.jsx`
+
+### 📁 src/components/MessageDisplay.jsx
+
+```jsx
+function MessageDisplay({ message }) {
+  return (
+    <div>
+      <h3>Message Display Component</h3>
+      <p><b>Message from Parent:</b> {message}</p>
+    </div>
+  );
+}
+
+export default MessageDisplay;
+```
+
+---
+
+# 🛠 Step 3: Modify `Home.jsx`
+
+### 📁 src/pages/Home.jsx
+
+```jsx
+import { useState } from "react";
+import MessageInput from "../components/MessageInput";
+import MessageDisplay from "../components/MessageDisplay";
+
+function Home() {
+  const [message, setMessage] = useState("");
+
+  const receiveMessageFromChild = (msg) => {
+    setMessage(msg);
+  };
+
+  return (
+    <div>
+      <h2>Home Page</h2>
+
+      <MessageInput sendMessageToParent={receiveMessageFromChild} />
+
+      <MessageDisplay message={message} />
+    </div>
+  );
+}
+
+export default Home;
+```
+
+---
+
+# 🔍 What Is Happening Here?
+
+### 1️⃣ Parent → Child
+
+```jsx
+<MessageDisplay message={message} />
+```
+
+Parent sends data using props.
+
+---
+
+### 2️⃣ Child → Parent
+
+```jsx
+<MessageInput sendMessageToParent={receiveMessageFromChild} />
+```
+
+Parent sends a function to child.
+
+Inside child:
+
+```jsx
+sendMessageToParent(message);
+```
+
+Child calls parent function.
+
+This updates parent state.
+
+Parent re-renders.
+
+Updated value goes to `MessageDisplay`.
+
+---
+
+# 🔄 Flow Diagram (Explain This in Class)
+
+```
+MessageInput (Child)
+        ↓
+Calls Parent Function
+        ↓
+Home (Parent State Updated)
+        ↓
+MessageDisplay (Receives Updated Data)
+```
+
+---
+
+# 🎓 How To Explain In Class (Simple Words)
+
+> React data flows from Parent to Child using props.
+> To send data from Child to Parent, we pass a function as a prop.
+
+---
+
+# 💡 Optional Enhancement (If You Want To Show Advanced Concept)
+
+You can also log:
+
+```js
+console.log("Parent re-rendered");
+```
+
+inside `Home.jsx` to show how state change causes re-render.
+
+---
+
+
+
