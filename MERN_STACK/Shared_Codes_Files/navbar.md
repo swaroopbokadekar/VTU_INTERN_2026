@@ -565,4 +565,210 @@ inside `Home.jsx` to show how state change causes re-render.
 ---
 
 
+======================================================
+# useEffect hook
+
+Since you are **teaching React basics**, the best way to demonstrate **`useEffect`** is with a **real-time looking scenario** that students understand immediately.
+
+A very practical example in your **Student Management project**:
+
+> **Use Case:** When the **Home page loads**, fetch and display **recent announcements for students** from the server.
+
+This clearly demonstrates:
+
+* Component **loading**
+* **Fetching data**
+* **useEffect lifecycle**
+* **Updating UI after API response**
+
+---
+
+# 1. Updated Project Structure (Only One New Component)
+
+We will add one component:
+
+```
+stud_mngt
+│
+├── src
+│   ├── components
+│   │     ├── Navbar.jsx
+│   │     ├── Footer.jsx
+│   │     └── Announcements.jsx   <-- NEW (useEffect demo)
+│
+│   ├── pages
+│   │     ├── Home.jsx
+│
+```
+
+---
+
+# 2. Real-Time Scenario Explained (For Students)
+
+When a student opens the dashboard:
+
+1. Page loads
+2. React calls the **Announcements component**
+3. `useEffect` runs **after component renders**
+4. It **fetches announcements from backend**
+5. UI updates automatically
+
+You can explain it like:
+
+> "Whenever the page loads, React automatically calls the backend and updates the announcements section."
+
+---
+
+# 3. Announcements Component (useEffect Demo)
+
+📄 **components/Announcements.jsx**
+
+```javascript
+import { useEffect, useState } from "react";
+
+function Announcements() {
+
+  const [announcements, setAnnouncements] = useState([]);
+
+  useEffect(() => {
+
+    console.log("Fetching announcements...");
+
+    // Simulating backend API
+    setTimeout(() => {
+      const data = [
+        "Midterm exam starts next week",
+        "Project submission deadline Friday",
+        "Guest lecture on AI tomorrow"
+      ];
+
+      setAnnouncements(data);
+    }, 2000);
+
+  }, []);
+
+  return (
+    <div>
+      <h3>Latest Announcements</h3>
+
+      {announcements.length === 0 ? (
+        <p>Loading announcements...</p>
+      ) : (
+        <ul>
+          {announcements.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+      )}
+
+    </div>
+  );
+}
+
+export default Announcements;
+```
+
+---
+
+# 4. Use the Component in Home Page
+
+📄 **pages/Home.jsx**
+
+```javascript
+import Announcements from "../components/Announcements";
+
+function Home() {
+  return (
+    <div>
+      <h2>Welcome to Student Portal</h2>
+
+      <Announcements />
+
+    </div>
+  );
+}
+
+export default Home;
+```
+
+---
+
+# 5. How to Explain useEffect to Students
+
+### Step-by-Step Execution
+
+1️⃣ Component renders
+
+```
+Announcements component loads
+```
+
+2️⃣ `useEffect` runs
+
+```
+Fetching announcements...
+```
+
+3️⃣ API call simulated using `setTimeout`
+
+4️⃣ State updates
+
+```
+setAnnouncements(data)
+```
+
+5️⃣ UI re-renders automatically
+
+---
+
+# 6. Key Line to Highlight
+
+```
+useEffect(() => {
+
+   // code that runs after component renders
+
+}, []);
+```
+
+### Meaning of `[]`
+
+```
+[]  → run only once (when component loads)
+```
+
+Equivalent to:
+
+```
+componentDidMount()
+```
+
+---
+
+# 7. What Students Will See
+
+Initially:
+
+```
+Latest Announcements
+Loading announcements...
+```
+
+After 2 seconds:
+
+```
+Latest Announcements
+
+• Midterm exam starts next week
+• Project submission deadline Friday
+• Guest lecture on AI tomorrow
+```
+
+---
+
+# 8. One-Line Summary for Students
+
+> **useEffect is used to run side effects like API calls, database calls, or timers when a component loads or updates.**
+
+---
 
