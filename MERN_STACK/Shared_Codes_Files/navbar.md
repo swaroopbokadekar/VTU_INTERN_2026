@@ -771,4 +771,288 @@ Latest Announcements
 > **useEffect is used to run side effects like API calls, database calls, or timers when a component loads or updates.**
 
 ---
+====================================================
+
+# useEffect (on value change)
+
+Since we added a **new component to demonstrate `useEffect` reacting to dependency changes**, only a **small change in the project structure** is required.
+
+Below is the **updated partial structure** of your project.
+
+```
+stud_mngt
+│
+├── src
+│   ├── components
+│   │     ├── Navbar.jsx
+│   │     ├── Footer.jsx
+│   │     ├── Announcements.jsx      // useEffect with []  (runs once)
+│   │     └── CourseTeacher.jsx      // useEffect with [course] dependency
+│   │
+│   ├── layouts
+│   │     └── MainLayout.jsx
+│   │
+│   ├── pages
+│   │     ├── Home.jsx               // imports Announcements & CourseTeacher
+│   │     ├── Login.jsx
+│   │     └── Register.jsx
+│   │
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css
+```
+
+### Component Responsibilities
+
+**Announcements.jsx**
+
+```
+Demo: useEffect with []
+Purpose: Load announcements when page loads
+```
+
+**CourseTeacher.jsx**
+
+```
+Demo: useEffect with dependency [course]
+Purpose: Fetch teacher when course selection changes
+```
+
+**Home.jsx**
+
+```
+Acts as dashboard page that displays:
+
+• Announcements
+• CourseTeacher demo
+```
+
+Example flow in **Home.jsx**:
+
+```
+Home Page
+   │
+   ├── Announcements   (useEffect runs once)
+   │
+   └── CourseTeacher   (useEffect runs when course changes)
+```
+
+This structure lets you **teach two important `useEffect` cases side-by-side**:
+
+```
+Case 1: useEffect(() => {}, [])
+Case 2: useEffect(() => {}, [dependency])
+```
+
+================================
+
+Since students already understand:
+
+```
+useEffect(() => {
+   // runs once
+}, [])
+```
+
+the **next logical step** is to show:
+
+> **useEffect reacting to a change in some value (dependency).**
+
+A very simple **real-time use case** for your **Student Management project**:
+
+> When a **student selects a course**, automatically **load the teacher for that course**.
+
+This clearly demonstrates:
+
+* state change
+* dependency array
+* useEffect reacting to value change
+* real-world UI behavior
+
+---
+
+# Demo Use Case
+
+**Scenario**
+
+Student selects a course from dropdown.
+
+When the course changes:
+
+* React detects the change
+* `useEffect` runs
+* Teacher information is fetched
+
+---
+
+# Component: CourseTeacher.jsx
+
+📄 **src/components/CourseTeacher.jsx**
+
+```javascript
+import { useState, useEffect } from "react";
+
+function CourseTeacher() {
+
+  const [course, setCourse] = useState("");
+  const [teacher, setTeacher] = useState("");
+
+  useEffect(() => {
+
+    if (course === "") return;
+
+    console.log("Course changed. Fetching teacher...");
+
+    // Simulated backend data
+    const teacherData = {
+      Java: "Mr. Sharma",
+      Python: "Ms. Priya",
+      React: "Mr. Arjun"
+    };
+
+    setTeacher(teacherData[course]);
+
+  }, [course]);   // 👈 dependency
+
+  return (
+    <div>
+
+      <h3>Select Course</h3>
+
+      <select onChange={(e) => setCourse(e.target.value)}>
+        <option value="">-- Select Course --</option>
+        <option value="Java">Java</option>
+        <option value="Python">Python</option>
+        <option value="React">React</option>
+      </select>
+
+      {teacher && (
+        <p>Teacher for this course: <b>{teacher}</b></p>
+      )}
+
+    </div>
+  );
+}
+
+export default CourseTeacher;
+```
+
+---
+
+# Use It in Home Page
+
+📄 **pages/Home.jsx**
+
+```javascript
+import CourseTeacher from "../components/CourseTeacher";
+
+function Home() {
+  return (
+    <div>
+      <h2>Student Dashboard</h2>
+
+      <CourseTeacher />
+
+    </div>
+  );
+}
+
+export default Home;
+```
+
+---
+
+# What Students Will Observe
+
+Initially:
+
+```
+Select Course
+[dropdown]
+```
+
+Student selects **Python**
+
+Console:
+
+```
+Course changed. Fetching teacher...
+```
+
+UI updates automatically:
+
+```
+Teacher for this course: Ms. Priya
+```
+
+If they change to **React**
+
+Console again prints and teacher updates.
+
+---
+
+# Key Teaching Point
+
+Highlight this line:
+
+```
+}, [course])
+```
+
+Meaning:
+
+```
+Run useEffect whenever 'course' changes
+```
+
+---
+
+# Simple Explanation for Students
+
+| Dependency          | Behavior                       |
+| ------------------- | ------------------------------ |
+| `[]`                | Runs once when component loads |
+| `[course]`          | Runs whenever course changes   |
+| No dependency array | Runs every render              |
+
+---
+
+# Simple Visual Timeline
+
+```
+Page loads
+   ↓
+useEffect does NOT run (course empty)
+
+Student selects "Python"
+   ↓
+course state changes
+   ↓
+useEffect runs
+   ↓
+Teacher fetched
+   ↓
+UI updates
+```
+
+---
+
+# Powerful 10-second Question to Ask Students
+
+Ask them:
+
+> "If I change `[course]` to `[]`, what will happen?"
+
+Correct answer:
+
+```
+Teacher will not change when course changes
+because useEffect will run only once.
+```
+
+This makes the concept **stick immediately**.
+
+---
+
+
 
